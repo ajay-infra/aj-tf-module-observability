@@ -7,6 +7,25 @@
 Grafana LGTM stack (Loki/Mimir/Tempo/Grafana) deployed on the central EKS cluster.
 Reusable module — consumed by aj-infra-central (or used standalone).
 
+## Where It Fits
+
+**Architecture layer:** L7 — Central Observability
+**Consumed by:** `aj-infra-central` — the central cluster platform layer installs LGTM from this module's Helm charts
+**State key:** managed by `aj-infra-central`; this module does not have its own state key when used via aj-infra-central
+**Alternative:** Can also be applied standalone (own state) for one-off LGTM deployments
+
+## How to Use
+
+Consumed indirectly via `aj-infra-central` — you do not apply this module directly in the standard pipeline. `provision-central.yml` checks out `aj-infra-central` which uses this module.
+
+To deploy LGTM on a central cluster, run `provision-central.yml` in aj-infra-release:
+```
+GitHub Actions → provision-central.yml
+  inputs: tier (nonprod|prod), action (apply)
+```
+
+After the central-platform stage completes, ArgoCD picks up `applicationsets/central/<tier>/lgtm.yaml` from aj-platform-gitops and deploys the LGTM stack using values from `charts/*/values/<tier>.yaml`.
+
 ## Module Structure
 
 ```

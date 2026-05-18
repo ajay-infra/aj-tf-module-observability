@@ -1,0 +1,16 @@
+{
+  "_comment": "Pinned versions. Keep in sync with variables.tf defaults.",
+  "terraform": "1.7.5",
+  "providers": {
+    "aws":        "5.100.0",
+    "helm":       "2.12.1",
+    "kubernetes": "2.27.0",
+    "random":     "3.6.3"
+  },
+  "helm_charts": {
+    "grafana":           "8.8.4",
+    "loki":              "6.24.0",
+    "mimir-distributed": "5.5.1",
+    "tempo":             "1.14.0"
+  }
+}

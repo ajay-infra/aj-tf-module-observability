@@ -45,7 +45,7 @@ Controlled by `environment = "nonprod" | "prod"` — all scaling and retention f
 ```hcl
 # aj-infra-central already created S3 + IAM — pass them in
 module "lgtm" {
-  source = "github.com/ajay-infra/aj-tf-module-observability?ref=v0.1.0"
+  source = "github.com/ajay-infra/aj-tf-module-observability?ref=v1.0.0"
 
   aws_account_id   = "123456789012"
   environment      = "nonprod"
@@ -74,7 +74,7 @@ module "lgtm" {
 
 ```hcl
 module "lgtm" {
-  source = "github.com/ajay-infra/aj-tf-module-observability?ref=v0.1.0"
+  source = "github.com/ajay-infra/aj-tf-module-observability?ref=v1.0.0"
 
   aws_account_id   = "123456789012"
   environment      = "nonprod"
@@ -143,7 +143,7 @@ tempo_endpoint        = module.lgtm.tempo_otlp_endpoint
 
 | Tool | Version |
 |---|---|
-| Terraform | `= 1.7.5` |
+| Terraform | `= 1.10.5` |
 | AWS | `= 5.100.0` |
 | Helm | `= 2.12.1` |
 | Kubernetes | `= 2.27.0` |

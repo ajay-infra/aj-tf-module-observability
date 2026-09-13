@@ -4,6 +4,15 @@ All notable changes to this module are documented here. Format loosely follows [
 
 ## [Unreleased]
 
+### Changed — `team` is required and must be a team code
+Breaking: `var.team` no longer defaults to `infra-core`; it must be
+`team-NNNN`, a row in `aj-infra/envs/org/teams.yaml`. Every consumer in the
+estate already passes one (`team = "team-0001"` in aj-infra's tfvars since
+2026-09-12), so nothing changes for them; a caller that forgot would have
+tagged resources — and labelled namespaces — with a slug nobody registered,
+which `require-product-code` now refuses at admission. Next tag is a major.
+
+
 ### Fixed
 - `skills.md`'s "Purpose" line described the module as "Prometheus, Grafana, Loki" with "multi-cluster scrape federation" — neither is accurate. Grepped the module: no standalone Prometheus deployment exists (Mimir is the actual metrics backend, exposed to Grafana as a `prometheus`-type datasource because it speaks the Prometheus remote-write/query API), Tempo and Mimir were both missing from the component list entirely, and there is no scrape-based federation anywhere in the code — workload clusters push telemetry to this stack (Loki push API, Mimir remote-write, Tempo OTLP) via Alloy, not pull/scrape. Rewrote the Purpose section to match `README.md`'s accurate LGTM description.
 - `README.md`'s "Provider pins" table said Terraform `= 1.7.5` — `providers.tf` actually pins `= 1.10.5`, matching the platform-wide Terraform 1.10.5 migration already reflected everywhere else. Same stale-version pattern already found and fixed in every other `aj-tf-module-*` repo touched this project.
